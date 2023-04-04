@@ -24,6 +24,7 @@ public class Main {
 			sum = sum + Narr[i];
 		}
 		
+		// 100.0으로 해야 실수값 나온다. (100 안됨)
 		System.out.println(sum * 100.0 / max / N);
 	}
 
