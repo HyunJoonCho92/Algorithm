@@ -1,31 +1,38 @@
 import java.util.Scanner;
 
 public class Main {
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		
-		int Narr[] = new int[N];
-		
-		for(int i = 0; i < N;i++) {
-			Narr[i] = sc.nextInt();
-		}
-		
-		long sum = 0;
-		long max = 0;
-		
-		for(int i = 0 ; i < N; i++) {
-			if(max < Narr[i]) {
-				max = Narr[i];
-			}
-			sum = sum + Narr[i];
-		}
-		
-		// 100.0으로 해야 실수값 나온다. (100 안됨)
-		System.out.println(sum * 100.0 / max / N);
-	}
+        int N = sc.nextInt();
 
+        double score[] = new double[N];
+
+        for(int i = 0 ; i < N;i++) {
+            score[i] = sc.nextInt();
+        }
+
+        double max = 0;
+        double sum = 0;
+
+        for(int i = 0 ; i < N;i++) {
+            if(score[i] > max) {
+                max = score[i];
+            }
+        }
+
+        for(int i = 0 ; i < N; i++) {
+            score[i] = score[i] * 100 / max;
+        }
+
+        for(int i= 0; i < N; i++) {
+            sum += score[i];
+        }
+
+        double average = (double)(sum / N);
+
+        System.out.println(average);
+
+    }
 }
