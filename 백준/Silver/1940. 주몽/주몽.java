@@ -1,32 +1,48 @@
 import java.util.Arrays;
 import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
+import java.io.*;
 
+public class Main {
+    public static void main(String[] args) throws IOException{
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int M = Integer.parseInt(br.readLine());
 
         int arr[] = new int[N];
 
-        for(int i = 0 ; i < N;i++){
-            arr[i] = sc.nextInt();
+        String temp[] = br.readLine().split(" ");
+
+        for(int i = 0 ; i < N;i++) {
+            arr[i] = Integer.parseInt(temp[i]);
         }
 
         Arrays.sort(arr);
 
         int count = 0;
+        int startIndex = 0;
+        int endIndex = N - 1;
+        int sum = arr[startIndex] + arr[endIndex];
 
-        for(int i = 0 ; i < N-1;i++){
-            for(int j = i+1; j <N;j++){
-                if((arr[i]+arr[j]) == M){
-                    count++;
-                    break;
-                }
+        while(startIndex < endIndex) {
+            if(sum == M) {
+                count++;
+                startIndex++;
+                sum = arr[startIndex] + arr[endIndex];
+            }
+            else if (sum < M) {
+                startIndex++;
+                sum = arr[startIndex] + arr[endIndex];
+            }
+            else if (sum > M) {
+                endIndex--;
+                sum = arr[startIndex] + arr[endIndex];
             }
         }
 
         System.out.println(count);
-
     }
 }
