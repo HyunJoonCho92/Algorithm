@@ -1,49 +1,57 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.*;
+
 public class Main {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException{
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
 
-        long arr[] = new long[N];
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        for(int i = 0 ; i < N;i++){
-            arr[i] = sc.nextLong();
+        int N = Integer.parseInt(br.readLine());
+
+        String M[] = br.readLine().split(" ");
+
+        int arr[] = new int[N];
+
+        for(int i = 0 ; i < N;i++) {
+            arr[i] = Integer.parseInt(M[i]);
         }
+
+//        for(int i = 0 ; i < N;i++) {
+//            System.out.print(arr[i] + " ");
+//        }
 
         Arrays.sort(arr);
 
         int count = 0;
-        int index = 0;
-
-        while(index < N){
-            int start = 0;
-            int end = N-1;
-            while(start < end){
-                long sum = arr[start] + arr[end];
-                //System.out.println(sum + " " + start + " " + end + " " + count);
-
-                if(start == index){
-                    start++;
+        for(int i = 0; i < N; i++) {
+            int startIndex = 0;
+            int endIndex = N - 1; // endIndex를 i-1로 하면 안됨. - 음수 상황도 생각해야되기 때문에
+            int answer = arr[i];
+            while(startIndex < endIndex) {
+                if(arr[startIndex] + arr[endIndex] == answer) {
+                    if(startIndex != i && endIndex != i){
+                        count++;
+                        break;
+                    }
+                    // 아래 조건 2개 추가
+                    if(startIndex == i) {
+                        startIndex++;
+                    }
+                    if(endIndex == i) {
+                        endIndex--;
+                    }
                 }
-                else if(end == index){
-                    end--;
+                else if(arr[startIndex] + arr[endIndex] < answer) {
+                    startIndex++;
                 }
-                else if(arr[index] == sum){
-                    count++;
-                    break;
-                }
-                else if(arr[index] < sum){
-                    end--;
-                }
-                else if(arr[index] > sum){
-                    start++;
+                else if(arr[startIndex] + arr[endIndex] > answer) {
+                    endIndex--;
                 }
             }
-            index++;
         }
-        System.out.println(count);
 
+        System.out.println(count);
     }
 }
