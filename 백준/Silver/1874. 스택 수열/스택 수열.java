@@ -1,53 +1,49 @@
-
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.io.*;
 import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int arr[] = new int[n];
 
-        for(int i = 0 ; i < n;i++){
-            arr[i] = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int arr[] = new int[N];
+
+        for(int i = 0 ; i < N;i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
+        StringBuilder sb = new StringBuilder();
+
+        boolean success = true;
+        int start = 0;
         Stack<Integer> stack = new Stack<>();
 
-        int num = 1;
-        Queue<String> answer = new LinkedList<>();
-        boolean result = true;
-
-        for(int i = 0 ; i < arr.length; i++){
-
-            // num <= arr[i] 이면 계속 push해야함.
-            if(num <= arr[i]){
-                while(num <= arr[i]){
-                    stack.push(num++);
-                    answer.add("+");
-                }
+        for(int i = 0 ; i < N; i++) {
+            while(arr[i] > start){
+                start++;
+                stack.push(start);
+                sb.append("+\n");
             }
-            //stack.peek == arr[i] 이면 pop
-            if(stack.peek() == arr[i]){
+            if(arr[i] == stack.peek()) {
                 stack.pop();
-                answer.add("-");
+                sb.append("-\n");
             }
-            //아니면 NO
             else {
-                result = false;
-                System.out.println("NO");
+                success = false;
                 break;
             }
         }
 
-        if(result){
-            int length = answer.size();
-            for(int i = 0; i < length; i++){
-                System.out.println(answer.remove());
-            }
+        if(success) {
+            System.out.println(sb);
+        }
+        else {
+            System.out.println("NO");
         }
     }
 }
